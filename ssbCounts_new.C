@@ -1,6 +1,6 @@
 {
 
-int firstRun=9957, lastRun=9973, goodpoints=0;
+int firstRun=9990, lastRun=9992, goodpoints=0;
 	vector<int> runs;
 
 	for (int i = firstRun; i<=lastRun; i++){
@@ -59,9 +59,9 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 		TCut end_time = Form("header.fTimeStamp>=%f", eventf_120);
 		TCut time = Form("header.fTimeStamp>=%f", event0);
 		
-		TCut sb0cut = "sb.ecal[0]>1525 && sb.ecal[0]<1700";
+		TCut sb0cut = "sb.ecal[0]>1525 && sb.ecal[0]<1850";
 		//TCut sb0cut = "nai.ecal[1]>1300 && sb.ecal[0]<2400"; 
-		TCut sb1cut = "sb.ecal[1]>1410 && sb.ecal[1]<1900";
+		TCut sb1cut = "sb.ecal[1]>1400 && sb.ecal[1]<2500";
 		//TCut sb1cut = "sb.ecal[1]>1000 && sb.ecal[1]<2700";
 		
 		// Apply energy and time cuts on SB spectrum.
@@ -77,7 +77,7 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 		//t3->Draw("nai.ecal[1]>>sb0_t1(256,0,4096)",end_time + sb0cut, "goff");
 
 		t3->Draw("sb.ecal[0]>>sb0",time + sb0cut,"goff");
-		//t3->Draw("sb.ecal[0]>>sb0");
+		//t3->Draw("sb.ecal[0]>>sb0",time,"goff");
 		t3->Draw("sb.ecal[0]>>sb0_t0",start_time + sb0cut,"goff");
 		t3->Draw("sb.ecal[0]>>sb0_t1",end_time + sb0cut, "goff");
 
@@ -98,22 +98,6 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 
 		Nsb0_tot += Nsb0;
 		
-/*
-		TLine *l1 = new TLine(1000,0,1000,200000);
-		TLine *l2 = new TLine(2500,0,2500,200000);
-
-		l1->SetLineColor(2);
-		l2->SetLineColor(2);
-
-		l1->SetLineStyle(2);
-		l2->SetLineStyle(2);
-
-		l1->SetLineWidth(2);
-		l2->SetLineWidth(2);
-
-		l1->Draw();
-		l2->Draw();
-*/
 		//TCanvas *c2 = new TCanvas();
 
         TString sb1Run = Form("SB1_Run%d", runs.at(i));
@@ -123,6 +107,7 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 
         
 		t3->Draw("sb.ecal[1]>>sb1",time + sb1cut,"goff");
+	//	t3->Draw("sb.ecal[1]>>sb1","goff");
 		t3->Draw("sb.ecal[1]>>sb1_t0",start_time + sb1cut,"goff");
 		t3->Draw("sb.ecal[1]>>sb1_t1",end_time + sb1cut,"goff");
 		
