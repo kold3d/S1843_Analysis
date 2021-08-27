@@ -1,10 +1,32 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys, getopt
 
+def main(argv):
+    inputfile = ''
+    try:
+        #opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile="])
+        opts, args = getopt.getopt(argv, "h:i:", ["ifile="])
+    except getopt.GetoptError:
+        print('ssbSort.py -i <inputfile>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print ('ssbSort.py -i <inputfile>')
+            sys.exit()
+        elif opt in ("-i", "--ifile"):
+            main.inputfile = arg
+   #     elif opt in ("-o", "--ofile"):
+   #         outputfile = arg
+    print ('Input file is "', main.inputfile)
+   # print ('Outputfile is "', outputfile)
 
-runNumber = np.loadtxt("output_ssb.dat", skiprows=1, dtype=int, usecols=[0])
-sb0Counts = np.loadtxt("output_ssb.dat", skiprows=1, dtype=int, usecols=[1])
-sb1Counts = np.loadtxt("output_ssb.dat", skiprows=1, dtype=int, usecols=[7])
+if __name__ == "__main__":
+    main(sys.argv[1:])
+
+runNumber = np.loadtxt(main.inputfile, skiprows=1, dtype=int, usecols=[0])
+sb0Counts = np.loadtxt(main.inputfile, skiprows=1, dtype=int, usecols=[1])
+sb1Counts = np.loadtxt(main.inputfile, skiprows=1, dtype=int, usecols=[7])
 
 fig = plt.figure()
 ax=fig.add_subplot(111)
@@ -43,6 +65,23 @@ for x,y in zip(runNumber,sb1Counts):
 # Set common labels
 ax.set_xlabel('Run Number')
 ax.set_ylabel('Counts')
+
+#Sum SSB counts
+sb0Total = 0
+sb1Total = 0
+if len(sb0Counts) == len(sb1Counts):
+    arrLen = len(sb0Counts)
+
+for i in range(0,arrLen):
+    sb0Total = sb0Total + sb0Counts[i]
+    sb1Total = sb1Total + sb1Counts[i]
+textstr = '\n'.join((
+    r'SB0 Total = %i' % (sb0Total, ),
+    r'SB1 Total = %i' % (sb1Total, ),
+))
+# these are matplotlib.patch.Patch properties
+props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+
+# place a text box in upper left in axes coords
+ax1.text(0.05,0.95, textstr, transform=ax.transAxes, fontsize=20, verticalalignment='top', bbox=props)
 plt.show()
-
-
