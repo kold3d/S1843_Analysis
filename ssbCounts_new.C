@@ -1,10 +1,10 @@
 {
 
-int firstRun=9990, lastRun=9992, goodpoints=0;
+int firstRun=9916, lastRun=9922, goodpoints=0;
 	vector<int> runs;
 
 	for (int i = firstRun; i<=lastRun; i++){
-		if( i==9968 || i==9969 ) {
+		if( i==9993 || i==9994 || i==9995 || i==9996 || i==9997 || i==9998 || i==10000 || i==10001 || i==10002 || i==10003 || i==10004 || i==10005) {
             continue;} 
 		runs.push_back(i);
 	}
@@ -36,6 +36,7 @@ int firstRun=9990, lastRun=9992, goodpoints=0;
     for( i=0; i < runs.size(); i++) {
 
 	sprintf(fname,"/data/astro/dragon/S1843/data/rootfiles/run%i.root", runs.at(i));
+//	sprintf(fname,"run%i.root", runs.at(i));
 
 	TFile *file=TFile::Open(fname);
 
@@ -59,9 +60,9 @@ int firstRun=9990, lastRun=9992, goodpoints=0;
 		TCut end_time = Form("header.fTimeStamp>=%f", eventf_120);
 		TCut time = Form("header.fTimeStamp>=%f", event0);
 		
-		TCut sb0cut = "sb.ecal[0]>1525 && sb.ecal[0]<1850";
+		TCut sb0cut = "sb.ecal[0]>2300 && sb.ecal[0]<2650";
 		//TCut sb0cut = "nai.ecal[1]>1300 && sb.ecal[0]<2400"; 
-		TCut sb1cut = "sb.ecal[1]>1400 && sb.ecal[1]<2500";
+		TCut sb1cut = "sb.ecal[1]>2150 && sb.ecal[1]<2900";
 		//TCut sb1cut = "sb.ecal[1]>1000 && sb.ecal[1]<2700";
 		
 		// Apply energy and time cuts on SB spectrum.
@@ -72,12 +73,9 @@ int firstRun=9990, lastRun=9992, goodpoints=0;
         TH1F *sb0 = new TH1F("sb0","SB0", 256, 0, 4096);
         TH1F *sb0_t0 = new TH1F("sb0_t0","SB0_t0", 256, 0, 4096);
         TH1F *sb0_t1 = new TH1F("sb0_t1","SB0_t1", 256, 0, 4096);
-		//t3->Draw("nai.ecal[1]>>sb0(128,0,4096)",time + sb0cut,"goff");
-		//t3->Draw("nai.ecal[1]>>sb0_t0(256,0,4096)",start_time + sb0cut,"goff");
-		//t3->Draw("nai.ecal[1]>>sb0_t1(256,0,4096)",end_time + sb0cut, "goff");
 
-		t3->Draw("sb.ecal[0]>>sb0",time + sb0cut,"goff");
-		//t3->Draw("sb.ecal[0]>>sb0",time,"goff");
+//		t3->Draw("sb.ecal[0]>>sb0",time + sb0cut,"goff");
+		t3->Draw("sb.ecal[0]>>sb0",time,"goff");
 		t3->Draw("sb.ecal[0]>>sb0_t0",start_time + sb0cut,"goff");
 		t3->Draw("sb.ecal[0]>>sb0_t1",end_time + sb0cut, "goff");
 
@@ -106,8 +104,8 @@ int firstRun=9990, lastRun=9992, goodpoints=0;
         TH1F *sb1_t1 = new TH1F("sb1_t1","SB0_t1", 256, 0, 4096);
 
         
-		t3->Draw("sb.ecal[1]>>sb1",time + sb1cut,"goff");
-	//	t3->Draw("sb.ecal[1]>>sb1","goff");
+//		t3->Draw("sb.ecal[1]>>sb1",time + sb1cut,"goff");
+		t3->Draw("sb.ecal[1]>>sb1",time,"goff");
 		t3->Draw("sb.ecal[1]>>sb1_t0",start_time + sb1cut,"goff");
 		t3->Draw("sb.ecal[1]>>sb1_t1",end_time + sb1cut,"goff");
 		
