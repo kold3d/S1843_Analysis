@@ -1,10 +1,10 @@
 {
 
-int firstRun=9916, lastRun=9922, goodpoints=0;
+int firstRun=9858, lastRun=9871, goodpoints=0;
 	vector<int> runs;
 
 	for (int i = firstRun; i<=lastRun; i++){
-		if( i==9993 || i==9994 || i==9995 || i==9996 || i==9997 || i==9998 || i==10000 || i==10001 || i==10002 || i==10003 || i==10004 || i==10005) {
+		if( i==9993 || i==9994 || i==9995 || i==9996 || i==9997 || i==9998 || i==10000 || i==10001 || i==10002 || i==10003 || i==10004 || i==10005 || i==9859 || i==9860 || i==9870) {
             continue;}
 		runs.push_back(i);
 	}
@@ -60,9 +60,9 @@ int firstRun=9916, lastRun=9922, goodpoints=0;
 		TCut end_time = Form("header.fTimeStamp>=%f", eventf_120);
 		TCut time = Form("header.fTimeStamp>=%f", event0);
 
-		TCut sb0cut = "sb.ecal[0]>2400 && sb.ecal[0]<2750";
+		TCut sb0cut = "sb.ecal[0]>2500 && sb.ecal[0]<2850";
 		//TCut sb0cut = "nai.ecal[1]>1300 && sb.ecal[0]<2400";
-		TCut sb1cut = "sb.ecal[1]>2200 && sb.ecal[1]<3000";
+		TCut sb1cut = "sb.ecal[1]>2300 && sb.ecal[1]<3100";
 		//TCut sb1cut = "sb.ecal[1]>1000 && sb.ecal[1]<2700";
 
 		// Apply energy and time cuts on SB spectrum.
@@ -74,8 +74,8 @@ int firstRun=9916, lastRun=9922, goodpoints=0;
         TH1F *sb0_t0 = new TH1F("sb0_t0","SB0_t0", 256, 0, 4096);
         TH1F *sb0_t1 = new TH1F("sb0_t1","SB0_t1", 256, 0, 4096);
 
-		t3->Draw("sb.ecal[0]>>sb0",time + sb0cut,"goff");
-//		t3->Draw("sb.ecal[0]>>sb0",time,"goff");
+//		t3->Draw("sb.ecal[0]>>sb0",time + sb0cut,"goff");
+		t3->Draw("sb.ecal[0]>>sb0",time,"goff");
 		t3->Draw("sb.ecal[0]>>sb0_t0",start_time + sb0cut,"goff");
 		t3->Draw("sb.ecal[0]>>sb0_t1",end_time + sb0cut, "goff");
 
@@ -104,8 +104,8 @@ int firstRun=9916, lastRun=9922, goodpoints=0;
         TH1F *sb1_t1 = new TH1F("sb1_t1","SB0_t1", 256, 0, 4096);
 
 
-		t3->Draw("sb.ecal[1]>>sb1",time + sb1cut,"goff");
-//		t3->Draw("sb.ecal[1]>>sb1",time,"goff");
+//		t3->Draw("sb.ecal[1]>>sb1",time + sb1cut,"goff");
+		t3->Draw("sb.ecal[1]>>sb1",time,"goff");
 		t3->Draw("sb.ecal[1]>>sb1_t0",start_time + sb1cut,"goff");
 		t3->Draw("sb.ecal[1]>>sb1_t1",end_time + sb1cut,"goff");
 
