@@ -1,10 +1,11 @@
 {
 
-int firstRun=9858, lastRun=9871, goodpoints=0;
+//int firstRun=9957, lastRun=9983, goodpoints=0;
+int firstRun=10001, lastRun=10001, goodpoints=0;
 	vector<int> runs;
 
 	for (int i = firstRun; i<=lastRun; i++){
-		if( i==9993 || i==9994 || i==9995 || i==9996 || i==9997 || i==9998 || i==10000 || i==10001 || i==10002 || i==10003 || i==10004 || i==10005 || i==9859 || i==9860 || i==9870) {
+		if( i==9957 || i== 9958 || i==9959 || i==9960 || i==9961 || i==9967 || i==9968 || i==9969 || i==9970 || i==9972 || i==9975 || i==9976 || i==9977 || i==9978 || i==9979 || i==9980 || i==9981 || i==9982) {
             continue;}
 		runs.push_back(i);
 	}
@@ -19,7 +20,7 @@ int firstRun=9858, lastRun=9871, goodpoints=0;
 	Double_t Nsb1, Nsb0, Nsb1_err, Nsb0_err, event0, event0_120, eventf, eventf_120, Nsb1_tot, Nsb0_tot, Nsb1_t0, Nsb1_t0_err, Nsb1_t1, Nsb1_t1_err, Nsb0_t0, Nsb0_t0_err, Nsb0_t1, Nsb0_t1_err;
 
 	if ( outfile.is_open() ) {
-		outfile << "Run Nsb0_tot Nsb0_tot_err Nsb0_start Nsb0_start_err Nsb0_end Nsb0_end_err Nsb1_tot Nsb1_tot_err Nsb1_start Nsb1_start_err Nsb1_end Nsb1_end_err" << endl;
+		outfile << "Run event0 eventf time Nsb0_tot Nsb0_tot_err Nsb0_start Nsb0_start_err Nsb0_end Nsb0_end_err Nsb1_tot Nsb1_tot_err Nsb1_start Nsb1_start_err Nsb1_end Nsb1_end_err" << endl;
 	}
 
 	// If not open diplay error:
@@ -141,6 +142,6 @@ int firstRun=9858, lastRun=9871, goodpoints=0;
 
 		Nsb1_tot += Nsb1;
 
-		outfile << runs.at(i) << " " << Nsb0 << " " << Nsb0_err << " " << Nsb0_t0 << " " << Nsb0_t0_err << " " << Nsb0_t1 << " " << Nsb0_t1_err << " " << Nsb1 << " " << Nsb1_err << " " << Nsb1_t0 << " " << Nsb1_t0_err << " " << Nsb1_t1 << " " << Nsb1_t1_err << endl;
+		outfile << runs.at(i) << " " << event0 << " " << eventf << " " << eventf - event0 << " " << Nsb0 << " " << Nsb0_err << " " << Nsb0_t0 << " " << Nsb0_t0_err << " " << Nsb0_t1 << " " << Nsb0_t1_err << " " << Nsb1 << " " << Nsb1_err << " " << Nsb1_t0 << " " << Nsb1_t0_err << " " << Nsb1_t1 << " " << Nsb1_t1_err << endl;
     }
 }

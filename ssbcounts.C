@@ -11,13 +11,13 @@ void ssbcounts(){
 // Last = 8936
 // 8823
 
-int firstRun=9957, lastRun=9973, goodpoints=0;
+int firstRun=9954, lastRun=9956, goodpoints=0;
 	vector<int> runs;
 
 	//for (int i = firstRun; i<=lastRun; i++){
 	//	if(i>8799 && i<8803 || i==8804 || i==8808 || i>8812 && i<8818 || i==8833 || i>8834 && i<8843 || i==8844 || i==8852 || i==8853 || i>8864 && i<8871 || i>8871 && i<8875 || i==8878 || i==8879 || i==8882 || i==8893 || i>8897 && i<8911 || i==8921 || i>8922 && i<8925 || i>8925 && i<8930) { continue; }			
 	for (int i = firstRun; i<=lastRun; i++){
-		if( i==9968 || i==9969) {
+		if( i==9957 || i== 9958 || i==9959 || i==9960 || i==9961 || i==9967 || i==9968 || i==9969 || i==9970 || i==9972 || i==9975 || i==9976 || i==9977 || i==9978 || i==9979 || i==9980 || i==9981 || i==9982) {
             continue;} 
 		runs.push_back(i);
 	}
@@ -42,8 +42,7 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 
 	for( i=0; i < runs.size(); i++) {
 
-//	sprintf(fname,"/data/astro/dragon/S1843/data/rootfiles/run%i.root", runs.at(i));
-	sprintf(fname,"/data/astro/dragon/S1843/data/rootfiles/run9957.root", runs.at(i));
+	sprintf(fname,"/data/astro/dragon/S1843/data/rootfiles/run%i.root", runs.at(i));
 
 	TFile *file=TFile::Open(fname);
 
@@ -66,13 +65,12 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 		TCut end_time = Form("header.fTimeStamp>=%f", eventf_120);
 		TCut time = Form("header.fTimeStamp>=%f", event0);
 		
-		TCut sb0cut = "sb.ecal[0]>1700 && sb.ecal[0]<2800";
-		//TCut sb0cut = "nai.ecal[1]>1300 && sb.ecal[0]<2400"; 
-		TCut sb1cut = "sb.ecal[1]>1000 && sb.ecal[1]<2700";
+		TCut sb0cut = "sb.ecal[0]>2000 && sb.ecal[0]<2300";
+		TCut sb1cut = "sb.ecal[1]>1850 && sb.ecal[1]<2500";
 		
 		// Apply energy and time cuts on SB spectrum.
 		
-		//TCanvas *c1 = new TCanvas();
+		TCanvas *c1 = new TCanvas();
 
 		//t3->Draw("nai.ecal[1]>>sb0(128,0,4096)",time + sb0cut,"goff");
 		//t3->Draw("nai.ecal[1]>>sb0_t0(256,0,4096)",start_time + sb0cut,"goff");
@@ -85,6 +83,7 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 		sb0->SetTitle("SB0");
 		sb0->GetXaxis()->SetTitle("ADC chan");
 		sb0->GetYaxis()->SetTitle("Counts (16 chan/bin)");
+        sb0->Draw();
 
 		Nsb0 = sb0->GetEntries();
 		Nsb0_err = sqrt(Nsb0);
@@ -112,7 +111,7 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 		l1->Draw();
 		l2->Draw();
 */
-		//TCanvas *c2 = new TCanvas();
+		TCanvas *c2 = new TCanvas();
 		
 		t3->Draw("sb.ecal[1]>>sb1(256,0,4096)",time + sb1cut,"goff");
 		t3->Draw("sb.ecal[1]>>sb1_t0(256,0,4096)",start_time + sb1cut,"goff");
@@ -122,6 +121,7 @@ int firstRun=9957, lastRun=9973, goodpoints=0;
 		sb1->GetXaxis()->SetTitle("ADC chan");
 		sb1->GetYaxis()->SetTitle("Counts (16 chan/bin)");
 		sb1->SetLineColor(1);
+        sb1->Draw();
 
 		TLegend *leg0 = new TLegend(0.6,0.7,0.9,0.9);
 		leg0->SetHeader("Legend"); // option "C" allows to center the header

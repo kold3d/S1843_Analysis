@@ -12,7 +12,7 @@ void Pressure(){
   dragon::BeamNorm BeamNorm("BeamNorm","/data/astro/dragon/S1843/rossum/N14_beam_April2021.rossumData");
 
 //For 265 keV/u
-				 Int_t firstRun = 9851;
+				 Int_t firstRun = 9821;
         Int_t lastRun = 10014;
 //For 483.5 keV/u:
 				//Int_t firstRun = 5192;
@@ -38,7 +38,7 @@ void Pressure(){
 				
 				
         // list array of unused runs:
-        Int_t badruns[] = {9852,9853,9870,9872,9873,9874,9876,9877,9880,9885,9886,9887,9888,9895,9913,9914,9925,9937,9958,9960,9967,9968,9969,9970,9972,9975,9976,
+        Int_t badruns[] = {9828, ,9829, 9831, 9832, 9833, 9834, 9835, 9836, 9837, 9838, 9839, 9852,9853,9870,9872,9873,9874,9876,9877,9880,9885,9886,9887,9888,9895,9913,9914,9925,9937,9958,9960,9967,9968,9969,9970,9972,9975,9976,
                             9977,9978,9979,9980,9981,9982,9984,9985,9986,9995,10008,10009};
         // set up vector of runs:
         std::vector<int> runs;
