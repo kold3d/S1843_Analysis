@@ -3,7 +3,7 @@
 
     // Specify the runs to be included in the analysis chain.
 
-    int firstRun= 9864, lastRun= 9871, goodpoints=0; // 5.8 Torr
+    int firstRun= 9896, lastRun= 9896, goodpoints=0; // 5.8 Torr
 
     // Fill the analysis chain vector
 
@@ -49,7 +49,6 @@
       t5->Draw("head.bgo.esort[0]>>h_bgo(240,0,12)",bgo && recoils);
       h_bgo->SetLineColor(1);
       h_bgo->SetTitle("E_{c.m.} = 1685 keV - #gamma_{0} Energy Spectrum");
-      //h_bgo->SetTitle("#splitline{E_{c.m.} = 1685 keV}{#gamma_{0} Energy Spectrum}");
       h_bgo->GetYaxis()->SetTitle("Counts [50 keV / bin]");
       h_bgo->GetXaxis()->SetTitle("#gamma_{0} Energy [MeV]");
       c0->SaveAs("1685-keV/1685_BGO_E.pdf");
@@ -169,7 +168,7 @@
     //recoilsbgo->SetLineColor(14);
     //xtof2->SetLineColor(2);
     xtof1->GetXaxis()->SetTitle("Time to travel through DRAGON in billionths of a second");
-    xtof1->GetXaxis()->SetRangeUser(1300,1500);
+    //xtof1->GetXaxis()->SetRangeUser(1300,1500);
     xtof1->GetXaxis()->CenterTitle();
     xtof1->GetYaxis()->SetTitle("Counts per 10 billionths of a second");
     //xtof1->GetYaxis()->SetRangeUser(0,200);
@@ -201,7 +200,8 @@
     // Graph Settings
 
     //t5->Draw("head.bgo.z0>>bgoz(51,-20,20,20000)", recoils);
-    t5->Draw("head.bgo.z0>>bgorec(51,-30,30)", recoils);
+    t5->Draw("head.bgo.z0>>bgorec(51,-30,30)", bgo);
+    //t5->Draw("head.bgo.z0>>bgorec(51,-30,30)", recoils);
     t5->Draw("head.bgo.z0>>bgorec2(51,-30,30)", recoils && dsssd && bgo, "same");
 
     bgorec->GetXaxis()->SetTitle("#gamma_{0} z-Position (cm)");

@@ -3,7 +3,7 @@
 
     // Specify the runs to be included in the analysis chain.
 
-    int firstRun= 9917, lastRun= 9922, goodpoints=0; // 5 Torr
+    int firstRun= 9918, lastRun= 9922, goodpoints=0; // 5 Torr
 
     // Fill the analysis chain vector
 
@@ -29,25 +29,29 @@
     TCut bgo = "head.bgo.esort[0]>0.5 && head.bgo.esort[0]<10.0";
     TCut SepTOF = "!(tail.io32.trigger_latch & 128) && !(coinc.xtofh==-1)";
     TCut recoils = SepTOF && "coinc.xtofh>1350 && coinc.xtofh<1450";
-    TCut dsssd = "tail.dsssd.efront>1600 && tail.dsssd.efront<1900";
+    TCut dsssd = "tail.dsssd.efront>1550 && tail.dsssd.efront<1900";
     TCut rftof = "rf>84 && rf<90";
     TCut real = "tail.dsssd.efront > 0";
+    TCut mcp0 = "tail.mcp.tac > 0";
 
 
     // Plots
 
-    //  TCanvas *c4 = new TCanvas();
-    //  TH1F *bgohit = new TH1F("bgo.hit0","bgo.hit0",30,0,30);
-    //  t5->Draw("head.bgo.hit0>>bgohit");
+      TCanvas *c4 = new TCanvas();
+      TH1F *bgohit = new TH1F("bgo.hit0","bgo.hit0",30,0,30);
+      t5->Draw("head.bgo.hit0>>bgohit");
+      c4->SetTitle("E_{c.m.} = 1625 keV - BGO Hit");
+      c4->SaveAs("1625-keV/BGO_hit0.pdf");
 
     //BGO E
 
       TCanvas *c0 = new TCanvas();
       t5->Draw("head.bgo.esort[0]>>h_bgo(240,0,12)",bgo && recoils && "head.bgo.esort[0]>0.5");
       h_bgo->SetLineColor(1);
-      h_bgo->SetTitle("#gamma_{0} Energy Spectrum");
+      h_bgo->SetTitle("E_{c.m.} = 1625 keV - #gamma_{0} Energy Spectrum");
       h_bgo->GetYaxis()->SetTitle("Counts [50 keV / bin]");
       h_bgo->GetXaxis()->SetTitle("#gamma_{0} Energy [MeV]");
+      c0->SaveAs("1625-keV/1625_BGO_E.pdf");
 
 
     // MCP TAC vs DSSSD
@@ -116,15 +120,15 @@
     coinc->SetLineColor(2);
     //golden->SetLineColor(2);
 
-    //c2.SetLogy();
+    c2.SetLogy();
 
     singles->SetStats(0);
     singles->GetXaxis()->SetRangeUser(1300,2400);
-    singles->GetXaxis()->SetTitle("DSSSD Efront");
+    singles->GetXaxis()->SetTitle("DSSSD Efront [keV]");
     singles->GetYaxis()->SetTitle("Counts");
     singles->GetXaxis()->CenterTitle();
     singles->GetYaxis()->CenterTitle();
-    singles->SetTitle("");
+    singles->SetTitle("DSSSD Energy");
     // Graph Legend Settings
 
     leg2 = new TLegend(0.6,0.65,0.9,0.85);
@@ -137,6 +141,8 @@
 
     c2->SetTickx();
     c2->SetTicky();
+
+    c2->SaveAs("1625-keV/1625_DSSSD_E.pdf");
 
     // Print number or recoils in "golden" gate
 
@@ -169,6 +175,8 @@
     // xtof->SetStats(0);
     c30->SetTickx();
     c30->SetTicky();
+
+    c30->SaveAs("1625-keV/1625_sepTOF.pdf");
 
     // Graph Legend Settings
 
