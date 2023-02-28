@@ -86,8 +86,7 @@
     // Draw the graph
 
       t5->Draw("tail.mcp.tac:tail.dsssd.efront>>dsssdmcp1", dsssd && recoils, "same");
-
-    // Graph Legend Settings
+// Graph Legend Settings
 
     leg1 = new TLegend(0.65,0.65,0.85,0.85);
     leg1->AddEntry(tofdsssd, "All coincidences","p");
@@ -148,6 +147,17 @@
 
     Double_t coinc_events = coinc->GetEntries();
     cout << "Coincidence in golden (DSSSD, Separator TOF, BGO) gate: " << coinc_events << endl;
+
+    // DSSSD Hit Pattern
+    //
+    TCanvas *c14 = new TCanvas();
+    //TH2F *dxy = new TH2F("dxy", "dxy", 15, 0, 15);
+    t5->Draw("tail.dsssd.hit_back:tail.dsssd.hit_front>>dxy(16, 0, 15, 16, 16, 31)", "tail.dsssd.efront>0", "colz");
+    dxy->GetXaxis()->SetTitle("Front strips");
+    dxy->GetYaxis()->SetTitle("Back strips");
+    c14->SaveAs("1625-keV/1625_dsssdXY.pdf");
+
+
 
     // Separator TOF
 
@@ -228,7 +238,7 @@
 
 
     TCanvas *c13 = new TCanvas();
-    TH2F *icdsssd = new TH2F("icdsssd", "icdsssd", 100, 0, 4000, 1e3, 0, 1e4);
+    TH2F *icdsssd = new TH2F("icdsssd", "icdsssd", 100, 0, 4000, 1e3, 0, 4e3);
     icdsssd->SetMarkerStyle(20);
     icdsssd->SetMarkerColor(kAzure-2);
     icdsssd->SetMarkerSize(0.6);
@@ -243,4 +253,5 @@
     icdsssd1->GetXaxis()->SetTitle("DSSSD esort[0] [Channels]");
     icdsssd1->GetYaxis()->SetTitle("IC sum [Channels]");
     t5->Draw("tail.ic.sum:tail.dsssd.efront>>icdsssd1",recoils ,"same");
+    c13->SaveAs("1625-keV/1625_icdsssd_E.pdf");
 }
