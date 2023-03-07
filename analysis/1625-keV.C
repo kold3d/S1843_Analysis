@@ -201,20 +201,23 @@
     //leg->SetBorderSize(0);
     //leg->Draw("same");
 
-    /*
+    
     // BGO Energy -- individual channels
 	TCanvas *c31 = new TCanvas("c31", "bgo_energy",3840,2160);
 	c31->Divide(6,5);
 	TH1F *h_BGOenergy[30];
 	for (int i = 0; i<30; i++) {
 		c31->cd(i+1);
-		TString nameT = Form("head.bgo.ecal[%d] >> h_BGOenergy%d(300,0,7)",i,i);
+		TString nameT = Form("head.bgo.ecal[%d] >> h_BGOenergy%d(300,0,12)",i,i);
+        TString cutName = Form("head.bgo.ecal[%d]>0.5", i);
 		std::cout << nameT << std::endl;
-		t1->Draw(nameT);
+		t1->Draw(nameT, cutName);
+		//t1->Draw(nameT, bgo && recoils);
+		//t5->Draw(nameT, pulser && recoils && cutName);
 		c31->Update();
-		gPad->SetLogy(); gPad->Modified(); gPad->Update(); // note: gPad needs #include "TPad.h"
+		//gPad->SetLogy(); 
+        gPad->Modified(); gPad->Update(); // note: gPad needs #include "TPad.h"
     }
-*/
 
     // BGO Hit Pattern
 
