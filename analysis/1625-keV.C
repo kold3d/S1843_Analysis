@@ -3,6 +3,7 @@
 
     // Specify the runs to be included in the analysis chain.
 
+    //int firstRun= 9919, lastRun= 9919, goodpoints=0; // 5 Torr
     int firstRun= 9918, lastRun= 9922, goodpoints=0; // 5 Torr
 
     // Fill the analysis chain vector
@@ -26,10 +27,11 @@
 
 
     // Cuts for coincidence events
-    TCut bgo = "head.bgo.esort[0]>0.5 && head.bgo.esort[0]<10.0";
-    TCut SepTOF = "!(tail.io32.trigger_latch & 128) && !(coinc.xtofh==-1)";
-    TCut recoils = SepTOF && "coinc.xtofh>1350 && coinc.xtofh<1450";
-    TCut dsssd = "tail.dsssd.efront>1550 && tail.dsssd.efront<1900";
+    TCut bgo = "head.bgo.esort[0]>0.5 && head.bgo.esort[0]<11.0";
+    //TCut SepTOF = "!(tail.io32.trigger_latch & 128) && !(coinc.xtofh==-1)";
+    TCut pulser = "!(tail.io32.trigger_latch & 128) && !(coinc.xtofh==-1)";
+    TCut recoils = "coinc.xtofh>1350 && coinc.xtofh<1450";
+    TCut dsssd = "tail.dsssd.efront>1400 && tail.dsssd.efront<1900";
     TCut rftof = "rf>84 && rf<90";
     TCut real = "tail.dsssd.efront > 0";
     TCut mcp0 = "tail.mcp.tac > 0";
@@ -112,7 +114,8 @@
     // Graph Settings
 
     t3->Draw("tail.dsssd.efront>>singles(1000,0,4000)");
-    t5->Draw("tail.dsssd.efront>>coinc(1000,0,4000)", recoils && dsssd && bgo, "same");
+    t5->Draw("tail.dsssd.efront>>coinc(1000,0,4000)", recoils && pulser && bgo, "same");
+    //t5->Draw("tail.dsssd.efront>>coinc(1000,0,4000)", recoils && dsssd && bgo, "same");
 
 
     singles->SetLineColor(1);
@@ -165,8 +168,8 @@
 
     // Graph Settings
 
-    t5->Draw("coinc.xtofh>>xtof1(1300, -1e4, 1e4)", SepTOF);
-    t5->Draw("coinc.xtofh>>xtof2(1300,-1e4,1e4)", recoils && dsssd,"same");
+    t5->Draw("coinc.xtofh>>xtof1(1300, -1e4, 1e4)", pulser);
+    t5->Draw("coinc.xtofh>>xtof2(1300,-1e4,1e4)", recoils && pulser && dsssd,"same");
 
     //xtof->SetLineColor(1);
     xtof1->SetLineColor(1);
@@ -198,6 +201,20 @@
     //leg->SetBorderSize(0);
     //leg->Draw("same");
 
+    /*
+    // BGO Energy -- individual channels
+	TCanvas *c31 = new TCanvas("c31", "bgo_energy",3840,2160);
+	c31->Divide(6,5);
+	TH1F *h_BGOenergy[30];
+	for (int i = 0; i<30; i++) {
+		c31->cd(i+1);
+		TString nameT = Form("head.bgo.ecal[%d] >> h_BGOenergy%d(300,0,7)",i,i);
+		std::cout << nameT << std::endl;
+		t1->Draw(nameT);
+		c31->Update();
+		gPad->SetLogy(); gPad->Modified(); gPad->Update(); // note: gPad needs #include "TPad.h"
+    }
+*/
 
     // BGO Hit Pattern
 
@@ -206,8 +223,8 @@
     // Graph Settings
 
     //t5->Draw("head.bgo.z0>>bgoz(51,-20,20,20000)", recoils);
-    t5->Draw("head.bgo.z0>>bgorec(51,-30,30)", recoils);
-    t5->Draw("head.bgo.z0>>bgorec2(51,-30,30)", recoils && dsssd && bgo, "same");
+    t5->Draw("head.bgo.z0>>bgorec(51,-30,30)", recoils && pulser);
+    t5->Draw("head.bgo.z0>>bgorec2(51,-30,30)", recoils && pulser && dsssd && bgo, "same");
 
     bgorec->GetXaxis()->SetTitle("#gamma_{0} z-Position (cm)");
     bgorec->GetXaxis()->CenterTitle();
@@ -248,10 +265,11 @@
     icdsssd1->SetMarkerStyle(21);
     icdsssd1->SetMarkerColor(2);
     icdsssd1->SetMarkerSize(0.6);
+    icdsssd1->SetColz();
 
     icdsssd1->SetTitle("IC sum vs DSSSD energy - E_{c.m} = 1625 keV");
     icdsssd1->GetXaxis()->SetTitle("DSSSD esort[0] [Channels]");
     icdsssd1->GetYaxis()->SetTitle("IC sum [Channels]");
-    t5->Draw("tail.ic.sum:tail.dsssd.efront>>icdsssd1",recoils ,"same");
+    t5->Draw("tail.ic.sum:tail.dsssd.efront>>icdsssd1",recoils && pulser && bgo,"same");
     c13->SaveAs("1625-keV/1625_icdsssd_E.pdf");
 }
