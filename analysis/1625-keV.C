@@ -209,7 +209,7 @@
 	for (int i = 0; i<30; i++) {
 		c31->cd(i+1);
 		TString nameT = Form("head.bgo.ecal[%d] >> h_BGOenergy%d(300,0,12)",i,i);
-        TString cutName = Form("head.bgo.ecal[%d]>0.5", i);
+        TString cutName = Form("head.bgo.ecal[%d]>1.0", i);
 		std::cout << nameT << std::endl;
 		t1->Draw(nameT, cutName);
 		//t1->Draw(nameT, bgo && recoils);
